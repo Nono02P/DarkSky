@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace DarkSky
@@ -15,7 +16,7 @@ namespace DarkSky
         #endregion
 
         #region Variables privées
-
+        MapManager _mapManager;
         #endregion
 
         #region Propriétés
@@ -37,6 +38,7 @@ namespace DarkSky
             
             #endregion
             */
+            _mapManager = new MapManager("Content\\_Maps");
 
             base.Load();
         }
@@ -50,7 +52,7 @@ namespace DarkSky
         #region Update
         public override void Update(GameTime gameTime)
         {
-            #region Collisions
+            #region Collisions entre acteurs
             // Gère les collisions entre IActors
             List<IActor> lstCollisionnable = lstActors.FindAll(actor => actor is ICollisionnable);
             for (int i = 0; i < lstCollisionnable.Count; i++)
@@ -71,6 +73,11 @@ namespace DarkSky
             }
             #endregion
 
+            // Test chargement de l'autre map
+            // A supprimer !
+            if (Input.OnPressed(Keys.Space))
+                _mapManager.CurrentMap = "Content\\_Maps\\map2.tmx";
+
             base.Update(gameTime);
         }
         #endregion
@@ -78,6 +85,7 @@ namespace DarkSky
         #region Draw
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            _mapManager.Draw(spriteBatch, gameTime);
             base.Draw(spriteBatch, gameTime);
         }
         #endregion

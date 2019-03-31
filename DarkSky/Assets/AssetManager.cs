@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using System.Collections.Generic;
+using System.IO;
 
 namespace DarkSky
 {
@@ -27,6 +29,7 @@ namespace DarkSky
         public static Texture2D HowToPlay { get; private set; }
         public static Texture2D Victory { get; private set; }
         public static Texture2D Gameover { get; private set; }
+        public static Dictionary<string, Texture2D> TileSet { get; private set; }
         #endregion
 
         #region Load
@@ -57,6 +60,25 @@ namespace DarkSky
             Victory = pContent.Load<Texture2D>("_Background/Victory");
             #endregion
             */
+
+            TileSet = new Dictionary<string, Texture2D>();
+            string[] fileNames = Directory.GetFiles("Content/_Images/TileSet/");
+            for (int i = 0; i < fileNames.Length; i++)
+            {
+                string fullName = fileNames[i].Split(new char[] { '.' })[0];    // Retire l'extension
+                string[] splitteName = fullName.Split(new char[] { '/' });      // Découpe les dossiers
+                string name = splitteName[splitteName.Length - 1];              // Récupère le nom du fichier
+                string contentFileName = string.Empty;
+                for (int j = 1; j < splitteName.Length; j++)
+                {
+                    string s = splitteName[j];
+                    contentFileName += s;
+                    if (j < splitteName.Length - 1)
+                        contentFileName += "\\";
+                }
+                Texture2D img = pContent.Load<Texture2D>(contentFileName);
+                TileSet.Add(name, img);
+            }
         }
         #endregion
     }

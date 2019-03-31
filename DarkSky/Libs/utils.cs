@@ -42,7 +42,7 @@ namespace DarkSky
             }
             return result;
         }
-        public static bool OutOfScreen(MainGame pMainGame, Sprite pSprite)
+        public static bool OutOfScreen(Sprite pSprite)
         {
             bool result = false;
             Vector3 pCam = MainGame.Camera.Position;

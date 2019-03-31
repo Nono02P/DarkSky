@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\AssetManager.cs" />
+    <Compile Include="DarkSkyGame\IMap.cs" />
     <Compile Include="DarkSkyGame\MapManager.cs" />
     <Compile Include="DarkSkyGame\SceneManager\Scene.cs" />
     <Compile Include="DarkSkyGame\SceneManager\SceneManager.cs" />

@@ -14,6 +14,8 @@ namespace DarkSky
         #endregion
 
         #region Propriétés
+        public IMap Map { get; private set; }
+        public bool EnableContinuousCollisionDetection { get; set; }
         public Vector2 Position { get => _position; set { if (_position != value) { _position = value; RefreshBoundingBox(); } } }
         public Vector2 Velocity { get; set; }
         public IBoundingBox BoundingBox { get; protected set; } = new RectangleBBox();
@@ -29,7 +31,7 @@ namespace DarkSky
         #endregion
 
         #region Constructeur
-        public Sprite(Texture2D pImage, Rectangle? pImgBox, Vector2 pPosition, Vector2 pOrigin, Vector2 pScale)
+        public Sprite(Texture2D pImage, Rectangle? pImgBox, Vector2 pPosition, Vector2 pOrigin, Vector2 pScale, IMap pMap, bool pEnableContinuousCollisionDetection = false)
         {
             Image = pImage;
             ImgBox = pImgBox;
@@ -37,17 +39,21 @@ namespace DarkSky
             Origin = pOrigin;
             Scale = pScale;
             Effects = SpriteEffects.None;
+            Map = pMap;
+            EnableContinuousCollisionDetection = pEnableContinuousCollisionDetection;
             SceneManager.CurrentScene.AddActor(this);
         }
 
-        protected Sprite(Texture2D pImage)
+        protected Sprite(Texture2D pImage, IMap pMap)
         {
             Image = pImage;
+            Map = pMap;
             SceneManager.CurrentScene.AddActor(this);
         }
 
-        protected Sprite()
+        protected Sprite(IMap pMap)
         {
+            Map = pMap;
             SceneManager.CurrentScene.AddActor(this);
         }
         #endregion
@@ -74,7 +80,26 @@ namespace DarkSky
         #region Update
         public virtual void Update(GameTime gameTime)
         {
+            Vector2 collisionPos = Position;
             Position += Velocity;
+            bool collision = false;
+            if (EnableContinuousCollisionDetection)
+            {
+                Vector2 direction = Vector2.Normalize(Velocity);
+                while (!collision && (collisionPos.X < Position.X && collisionPos.Y < Position.Y) && !utils.OutOfScreen(Position))
+                {
+                    collision = Map.IsSolid(collisionPos);
+                    collisionPos += direction;
+                }
+            }
+            else
+            {
+                collision = Map.IsSolid(((RectangleBBox)BoundingBox).Rectangle);
+            }
+            if (collision)
+            {
+                Position = collisionPos;
+            }
         }
         #endregion
 
