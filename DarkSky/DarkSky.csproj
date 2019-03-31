@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5A137667-75D6-464E-89CC-2FC37D3ABA49}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DarkSky</RootNamespace>
+    <AssemblyName>DarkSky</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Assets\AssetManager.cs" />
+    <Compile Include="DarkSkyGame\MapManager.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scene.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\SceneManager.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scenes\Gameover.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scenes\Gameplay.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scenes\HowToPlay.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scenes\Menu.cs" />
+    <Compile Include="DarkSkyGame\SceneManager\Scenes\Victory.cs" />
+    <Compile Include="Libs\BackGround.cs" />
+    <Compile Include="Libs\Camera.cs" />
+    <Compile Include="Libs\Forms\Circle.cs" />
+    <Compile Include="Libs\Forms\Primitive2D.cs" />
+    <Compile Include="Libs\Forms\RectangleBBox.cs" />
+    <Compile Include="Libs\GUI\BarGraph.cs" />
+    <Compile Include="Libs\GUI\Button.cs" />
+    <Compile Include="Libs\GUI\Element.cs" />
+    <Compile Include="Libs\GUI\Group.cs" />
+    <Compile Include="Libs\GUI\GroupSelection.cs" />
+    <Compile Include="Libs\GUI\Image.cs" />
+    <Compile Include="Libs\GUI\Slider.cs" />
+    <Compile Include="Libs\GUI\Textbox.cs" />
+    <Compile Include="Libs\IActor.cs" />
+    <Compile Include="Libs\IBoundingBox.cs" />
+    <Compile Include="Libs\ICollisionnable.cs" />
+    <Compile Include="Libs\Input.cs" />
+    <Compile Include="Libs\MusicManager.cs" />
+    <Compile Include="Libs\Sprite.cs" />
+    <Compile Include="Libs\TiledSharp\ImageLayer.cs" />
+    <Compile Include="Libs\TiledSharp\Layer.cs" />
+    <Compile Include="Libs\TiledSharp\Map.cs" />
+    <Compile Include="Libs\TiledSharp\ObjectGroup.cs" />
+    <Compile Include="Libs\TiledSharp\TiledCore.cs" />
+    <Compile Include="Libs\TiledSharp\Tileset.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\CRC32.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\Deflate.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\DeflateStream.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\GZipStream.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\Inflate.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\InfTree.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\ParallelDeflateOutputStream.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\Tree.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\Zlib.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\ZlibBaseStream.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\ZlibCodec.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\ZlibConstants.cs" />
+    <Compile Include="Libs\TiledSharp\zlib\ZlibStream.cs" />
+    <Compile Include="Libs\Tweening.cs" />
+    <Compile Include="Libs\utils.cs" />
+    <Compile Include="MainGame.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+    <Content Include="Libs\TiledSharp\zlib\License.txt" />
+    <Content Include="Libs\TiledSharp\zlib\License.zlib.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
