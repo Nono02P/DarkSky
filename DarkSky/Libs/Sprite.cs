@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace DarkSky
 {
@@ -11,6 +12,8 @@ namespace DarkSky
         private Vector2 _origin = Vector2.Zero;
         private Vector2 _scale = Vector2.One;
         private Texture2D _image;
+
+        private Anim _baseAnim;
         #endregion
 
         #region Propriétés
@@ -28,11 +31,17 @@ namespace DarkSky
         public SpriteEffects Effects { get; set; }
         public bool ShowBoundingBox { get; set; }
         public float Layer { get; set; } = 0f;
+
+        public Anim BaseAnim { get => _baseAnim; protected set { _baseAnim = value; RefreshBoundingBox(); } }
+        public Anim CurrentAnim { get; set; }
         #endregion
 
         #region Constructeur
-        public Sprite(Texture2D pImage, Rectangle? pImgBox, Vector2 pPosition, Vector2 pOrigin, Vector2 pScale, IMap pMap, bool pEnableContinuousCollisionDetection = false)
+        public Sprite(Texture2D pImage, Rectangle? pImgBox, Vector2 pPosition, Vector2 pOrigin, Vector2 pScale, Vector2 pSizeTile, int pNbrFrame, float pSpeedAnim, IMap pMap, bool pEnableContinuousCollisionDetection = false)
         {
+            BaseAnim = new Anim(pImage, pSizeTile, pNbrFrame, pSpeedAnim);
+            CurrentAnim = BaseAnim;
+
             Image = pImage;
             ImgBox = pImgBox;
             Position = pPosition;
@@ -44,8 +53,11 @@ namespace DarkSky
             SceneManager.CurrentScene.AddActor(this);
         }
 
-        protected Sprite(Texture2D pImage, IMap pMap)
+        protected Sprite(Texture2D pImage, Vector2 pSizeTile, int pNbrFrame, float pSpeedAnim, IMap pMap)
         {
+            BaseAnim = new Anim(pImage, pSizeTile, pNbrFrame, pSpeedAnim);
+            CurrentAnim = BaseAnim;
+
             Image = pImage;
             Map = pMap;
             SceneManager.CurrentScene.AddActor(this);
@@ -68,7 +80,8 @@ namespace DarkSky
             RectangleBBox r = (RectangleBBox)BoundingBox;
             if (ImgBox == null)
             {
-                r.Rectangle = new Rectangle((int)(Position.X - Origin.X * Scale.X), (int)(Position.Y - Origin.Y * Scale.Y), (int)(Image.Width * Scale.X), (int)(Image.Height * Scale.Y));
+                if (Image != null)
+                    r.Rectangle = new Rectangle((int)(Position.X - Origin.X * Scale.X), (int)(Position.Y - Origin.Y * Scale.Y), (int)(Image.Width * Scale.X), (int)(Image.Height * Scale.Y));
             }
             else
             {
@@ -80,6 +93,10 @@ namespace DarkSky
         #region Update
         public virtual void Update(GameTime gameTime)
         {
+            CurrentAnim.DoAnim();
+            ImgBox = CurrentAnim.Frame[CurrentAnim.CurrentFrame];
+            Image = CurrentAnim.TileSet;
+
             Vector2 collisionPos = Position;
             Position += Velocity;
             bool collision = false;
@@ -89,12 +106,13 @@ namespace DarkSky
                 while (!collision && (collisionPos.X < Position.X && collisionPos.Y < Position.Y) && !utils.OutOfScreen(Position))
                 {
                     collision = Map.IsSolid(collisionPos);
-                    collisionPos += direction;
+                    if (!collision)
+                        collisionPos += direction;
                 }
             }
             else
             {
-                collision = Map.IsSolid(((RectangleBBox)BoundingBox).Rectangle);
+                collision = Map.IsSolid(Position); //Map.IsSolid(((RectangleBBox)BoundingBox).Rectangle);
             }
             if (collision)
             {
@@ -109,6 +127,64 @@ namespace DarkSky
             spriteBatch.Draw(Image, Position, ImgBox, Color.White, Angle, Origin, Scale, Effects, 0);
             if (ShowBoundingBox)
                 BoundingBox.Draw(spriteBatch, gameTime);
+        }
+        #endregion
+    }
+
+    public class Anim
+    {
+        #region Propriete
+        public Texture2D TileSet { get; private set; }
+        public Vector2 SizeTile { get; private set; }
+        public int NbrFrame { get; private set; }
+        public float AnimSpeed { get; set; }
+
+        public int CurrentFrame { get; set; }
+        public List<Rectangle> Frame { get; private set; }
+        #endregion
+
+        #region Constructor
+        public Anim(Texture2D pTileSet, Vector2 pSizeTile, int pNbrFrame, float pAnimSpeed)
+        {
+            TileSet = pTileSet;
+            SizeTile = pSizeTile;
+            NbrFrame = pNbrFrame;
+            AnimSpeed = pAnimSpeed;
+
+            SetFrame();
+        }
+        #endregion
+
+        #region Methode supp
+        private void SetFrame()
+        {
+            Frame = new List<Rectangle>();
+
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < NbrFrame; i++)
+            {
+                Frame.Add(new Rectangle(x, y, (int)SizeTile.X, (int)SizeTile.Y));
+                x += (int)SizeTile.X;
+                if (x > TileSet.Width)
+                {
+                    x = 0;
+                    y += (int)SizeTile.Y;
+                }
+            }
+        }
+
+        double c = 0;
+
+        public void DoAnim()
+        {
+            c += AnimSpeed;
+            if (c > 1)
+            {
+                CurrentFrame++;
+                CurrentFrame %= NbrFrame;
+                c = 0;
+            }
         }
         #endregion
     }

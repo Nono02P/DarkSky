@@ -43,8 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\AssetManager.cs" />
-    <Compile Include="DarkSkyGame\IMap.cs" />
-    <Compile Include="DarkSkyGame\MapManager.cs" />
+    <Compile Include="DarkSkyGame\Player\Controls\IControl.cs" />
+    <Compile Include="DarkSkyGame\Player\Controls\KeyboardControl.cs" />
+    <Compile Include="DarkSkyGame\Player\Races\IRace.cs" />
+    <Compile Include="DarkSkyGame\Player\Player.cs" />
+    <Compile Include="DarkSkyGame\Map\IMap.cs" />
+    <Compile Include="DarkSkyGame\Map\MapManager.cs" />
     <Compile Include="DarkSkyGame\SceneManager\Scene.cs" />
     <Compile Include="DarkSkyGame\SceneManager\SceneManager.cs" />
     <Compile Include="DarkSkyGame\SceneManager\Scenes\Gameover.cs" />
@@ -52,6 +56,9 @@
     <Compile Include="DarkSkyGame\SceneManager\Scenes\HowToPlay.cs" />
     <Compile Include="DarkSkyGame\SceneManager\Scenes\Menu.cs" />
     <Compile Include="DarkSkyGame\SceneManager\Scenes\Victory.cs" />
+    <Compile Include="DarkSkyGame\Player\Races\Race_Neoptera.cs" />
+    <Compile Include="DarkSkyGame\Player\Races\Race_Sapien.cs" />
+    <Compile Include="DarkSkyGame\Player\Races\Race_Yakshi.cs" />
     <Compile Include="Libs\BackGround.cs" />
     <Compile Include="Libs\Camera.cs" />
     <Compile Include="Libs\Forms\Circle.cs" />

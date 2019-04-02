@@ -30,6 +30,11 @@ namespace DarkSky
         public static Texture2D Victory { get; private set; }
         public static Texture2D Gameover { get; private set; }
         public static Dictionary<string, Texture2D> TileSet { get; private set; }
+        public static Texture2D imgPlayer { get; private set; }
+        public static Texture2D PlayerWalkRight { get; private set; }
+        public static Texture2D PlayerWalkUp { get; private set; }
+        public static Texture2D PlayerIdleRight { get; private set; }
+        public static Texture2D PlayerIdleUp { get; private set; }
         #endregion
 
         #region Load
@@ -52,15 +57,15 @@ namespace DarkSky
             MainFont = pContent.Load<SpriteFont>("_Font/MainFont");
             MenuFont = pContent.Load<SpriteFont>("_Font/MenuFont");
             #endregion
-            /*
+
             #region Textures
-            Menu = pContent.Load<Texture2D>("_Background/Menu");
+            /*Menu = pContent.Load<Texture2D>("_Background/Menu");
             HowToPlay = pContent.Load<Texture2D>("_Background/HowToPlay");
             Gameover = pContent.Load<Texture2D>("_Background/Defeat");
             Victory = pContent.Load<Texture2D>("_Background/Victory");
-            #endregion
             */
 
+            #region TileSet
             TileSet = new Dictionary<string, Texture2D>();
             string[] fileNames = Directory.GetFiles("Content/_Images/TileSet/");
             for (int i = 0; i < fileNames.Length; i++)
@@ -79,6 +84,17 @@ namespace DarkSky
                 Texture2D img = pContent.Load<Texture2D>(contentFileName);
                 TileSet.Add(name, img);
             }
+            #endregion
+
+            #region Player
+            imgPlayer = pContent.Load<Texture2D>("_Images/Player/Player");
+            PlayerWalkRight = pContent.Load<Texture2D>("_Images/Player/PlayerWalkRight");
+            PlayerWalkUp = pContent.Load<Texture2D>("_Images/Player/PlayerWalkUp");
+            PlayerIdleRight = pContent.Load<Texture2D>("_Images/Player/PlayerIdleRight");
+            PlayerIdleUp = pContent.Load<Texture2D>("_Images/Player/PlayerIdleUp");
+            #endregion
+
+            #endregion
         }
         #endregion
     }

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DarkSky
 {
     #region Enumérations
-    public enum eDirection : byte { Top, Right, Bottom, Left }
+    public enum eDirection : byte { Up, Right, Down, Left }
     public enum VAlign : byte { None, Top, Middle, Bottom }
     public enum HAlign : byte { None, Left, Center, Right }
     public enum SceneType : byte { Menu, Gameplay, Gameover, Victory, HowToPlay, }

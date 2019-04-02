@@ -16,7 +16,8 @@ namespace DarkSky
         #endregion
 
         #region Variables privées
-        MapManager _mapManager;
+        private MapManager _mapManager;
+        private Player _player;
         #endregion
 
         #region Propriétés
@@ -38,7 +39,11 @@ namespace DarkSky
             
             #endregion
             */
+
             _mapManager = new MapManager("Content\\_Maps");
+
+            // Player
+            _player = new Player(Vector2.One * 40, Player.eNomRace.Neoptera, _mapManager);
 
             base.Load();
         }
@@ -72,11 +77,6 @@ namespace DarkSky
                 }
             }
             #endregion
-
-            // Test chargement de l'autre map
-            // A supprimer !
-            if (Input.OnPressed(Keys.Space))
-                _mapManager.CurrentMap = "Content\\_Maps\\map2.tmx";
 
             base.Update(gameTime);
         }

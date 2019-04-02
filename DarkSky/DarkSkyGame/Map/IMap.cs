@@ -5,11 +5,10 @@ namespace DarkSky
 {
     public interface IMap
     {
-        Vector2 MapSize { get; }
+        Point MapSize { get; }
 
         bool IsOnMap(Vector2 pPosition);
         bool IsSolid(Vector2 pPosition);
-        bool IsSolid(Rectangle pRectangle);
         void Draw(SpriteBatch spriteBatch, GameTime gameTime);
     }
 }
